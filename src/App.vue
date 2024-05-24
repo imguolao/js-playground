@@ -1,9 +1,11 @@
 <script setup lang="ts">
 import { JSPlayground } from '../lib'
+
+const code = 'console.log(123)'
 </script>
 
 <template>
-  <JSPlayground />
+  <JSPlayground :default-code="code" auto-run first-run />
 </template>
 
 <style>
