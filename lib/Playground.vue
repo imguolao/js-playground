@@ -2,7 +2,7 @@
 import { onMounted, ref, watch, type WatchStopHandle } from 'vue'
 import { Editor, EditorProps } from '@guolao/vue-monaco-editor'
 import VConsole from './Console.vue'
-import { isUndefined, debounce, execCode } from './utils'
+import { type LogMessage, isUndefined, debounce, execCode } from './utils'
 
 defineOptions({
   name: 'JSPlayground',
@@ -19,7 +19,7 @@ const props = defineProps<{
 }>()
 
 const code = ref<string>(props?.defaultCode ?? '')
-const logs = ref<string[]>([])
+const logs = ref<LogMessage[]>([])
 const updateLogs = (code: string) => (logs.value = execCode(code))
 const clearLogs = () => (logs.value = [])
 
@@ -58,9 +58,9 @@ function useAutoRunCode() {
       />
     </div>
     <div class="p-console" :style="{ width: props.consoleWidth }">
-      <div>
-        <button @click="() => updateLogs(code)">run</button>
-        <button @click="clearLogs">clear</button>
+      <div class="p-operation">
+        <button @click="() => updateLogs(code)">RUN</button>
+        <button @click="clearLogs">CLEAR</button>
       </div>
       <VConsole :logs="logs" />
     </div>
@@ -82,5 +82,33 @@ function useAutoRunCode() {
 .p-console {
   height: 100%;
   width: 50%;
+  display: flex;
+  flex-direction: column;
+}
+
+.p-operation {
+  border-bottom: 1px solid #e0e0e0;
+  padding: 10px 0;
+  margin-bottom: 10px;
+}
+
+.p-operation button {
+  appearance: none;
+  box-sizing: border-box;
+  border: 1px solid #e0e0e0;
+  border-radius: 4px;
+  padding: 0 16px;
+  height: 32px;
+  background-color: #fff;
+  color: #4e4e4e;
+  cursor: pointer;
+}
+
+.p-operation button:hover {
+  background-color: #cdcdcd;
+}
+
+.p-operation button:not(:last-child) {
+  margin-right: 10px;
 }
 </style>

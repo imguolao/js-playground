@@ -1,15 +1,21 @@
-export function execCode(code: string): string[] {
-  const logResults: string[] = []
-  const onError = (e: any) => console.log(e.error)
+export type LogMessage = {
+  type: 'error' | 'info'
+  message: string
+}
+
+export function execCode(code: string): LogMessage[] {
+  const logResults: LogMessage[] = []
   const originalConsole = window.console
   try {
-    window.addEventListener('error', onError)
     window.console = new Proxy(console, {
       get(target, prop) {
         if (prop === 'log' || prop === 'error' || prop === 'warn') {
           return (...args: any[]) => {
             const message = args.join(' ')
-            logResults.push(message)
+            logResults.push({
+              type: prop === 'error' ? 'error' : 'info',
+              message,
+            })
             target[prop](...args)
           };
         }
@@ -19,9 +25,11 @@ export function execCode(code: string): string[] {
 
     new Function(code)()
   } catch (err) {
-    logResults.push(`${err}`)
+    logResults.push({
+      type: 'error',
+      message: `${err}`
+    })
   } finally {
-    window.removeEventListener('error', onError)
     window.console = originalConsole
   }
 
