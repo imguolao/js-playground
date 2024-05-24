@@ -1,13 +1,57 @@
 {
-  "name": "js-playground",
-  "private": true,
-  "description": "An js playground component.",
+  "name": "@guolao/js-playground",
+  "description": "A js playground component.",
   "version": "0.0.0",
-  "type": "module",
-  "scripts": {
-    "dev": "vite"
+  "author": {
+    "name": "guolao",
+    "email": "guolao.mq@foxmail.com"
   },
+  "main": "./dist/index.umd.cjs",
+  "module": "./dist/index.js",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "require": "./dist/index.umd.cjs"
+    },
+    "./dist/*.css": {
+      "import": "./dist/*.css",
+      "require": "./dist/*.css"
+    }
+  },
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build"
+  },
+  "publishConfig": {
+    "access": "public",
+    "repository": {
+      "type": "git",
+      "url": "git+https://github.com/imguolao/js-playground.git"
+    }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/imguolao/js-playground.git"
+  },
+  "keywords": [
+    "js",
+    "javascript",
+    "playground",
+    "vue",
+    "vue3",
+    "code"
+  ],
+  "files": [
+    "dist",
+    "LICENSE"
+  ],
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/imguolao/js-playground/issues"
+  },
+  "homepage": "https://imguolao.github.io/js-playground",
   "devDependencies": {
+    "@types/node": "^20.12.12",
     "@vitejs/plugin-vue": "^5.0.4",
     "typescript": "^5.2.2",
     "vite": "^5.2.0",
