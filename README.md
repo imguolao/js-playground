@@ -2,6 +2,9 @@
 
 A js playground component in vue3.
 
+![LICENSE](https://img.shields.io/github/license/imguolao/js-playground.svg) ![NPM](https://img.shields.io/npm/v/%40guolao%2Fjs-playground
+)
+
 ## Installation
 
 ```sh
