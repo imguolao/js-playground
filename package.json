@@ -1,7 +1,7 @@
 {
   "name": "@guolao/js-playground",
   "description": "A js playground component.",
-  "version": "0.0.0",
+  "version": "0.0.1-beta",
   "author": {
     "name": "guolao",
     "email": "guolao.mq@foxmail.com"
@@ -21,7 +21,8 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build --config ./vite.config.lib.ts",
-    "build:pages": "vite build"
+    "build:pages": "vite build",
+    "release": "node ./scripts/release.js"
   },
   "publishConfig": {
     "access": "public",
