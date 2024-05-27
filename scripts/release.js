@@ -21,14 +21,24 @@ function run() {
       fs.writeFileSync(packageJsonPath, JSON.stringify(packageJson, null, 2))
   
       console.log(`版本号更新为：${newVersion}`)
-      await runCommand('npm run build')
-      await runCommand(`git commit -am "Release ${newVersion}"`)
-      await runCommand(`git tag -a v${newVersion} -m "Release ${newVersion}"`)
-      await runCommand('git push && git push --tags')
-      await runCommand('npm publish')
+      const buildLog = await runCommand('npm run build')
+      console.log(buildLog)
+
+      const commitLog = await runCommand(`git commit -am "Release ${newVersion}"`)
+      console.log(commitLog)
+
+      const tagLog = await runCommand(`git tag -a v${newVersion} -m "Release ${newVersion}"`)
+      console.log(tagLog)
+
+      const pushLog = await runCommand('git push && git push --tags')
+      console.log(pushLog)
+
+      const publishLog = await runCommand('npm publish')
+      console.log(publishLog)
   
-      console.log('发布成功！')
+      console.log('------ 发布成功！------')
     } catch (err) {
+      console.log('------')
       console.error('发布失败：', err)
     } finally {
       rl.close()

@@ -1,7 +1,7 @@
 {
   "name": "@guolao/js-playground",
   "description": "A js playground component.",
-  "version": "0.0.1-beta",
+  "version": "0.0.2-beta",
   "author": {
     "name": "guolao",
     "email": "guolao.mq@foxmail.com"
