@@ -9,7 +9,7 @@ export function execCode(code: string, callback: (message: LogMessage) => void):
       get(target, prop) {
         if (prop === 'log' || prop === 'error' || prop === 'warn') {
           return (...args: any[]) => {
-            const message = args.join(' ')
+            const message = args.map(v => `${v}`).join(' ')
             callback({
               type: prop === 'error' ? 'error' : 'info',
               message,
