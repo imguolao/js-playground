@@ -2,10 +2,13 @@
 import { JSPlayground } from '../lib'
 
 const code = 'console.log(123)'
+const options = {
+  theme: 'vs-dark'
+}
 </script>
 
 <template>
-  <JSPlayground :default-code="code" auto-run first-run />
+  <JSPlayground :default-code="code" auto-run first-run :editor-options="options" />
 </template>
 
 <style>

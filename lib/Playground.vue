@@ -41,7 +41,6 @@ function useAutoRunCode() {
 
   let stop: WatchStopHandle | undefined
   watch(() => props.autoRun, () => {
-    console.log(1)
     stop?.()
     if (props.autoRun) {
       stop = watch(code, debounceRunCode)
@@ -60,11 +59,11 @@ function useAutoRunCode() {
       />
     </div>
     <div class="p-console" :style="{ width: props.consoleWidth }">
+      <VConsole :logs="logs" />
       <div class="p-operation">
         <button @click="() => updateLogs(code)">RUN</button>
         <button @click="clearLogs">CLEAR</button>
       </div>
-      <VConsole :logs="logs" />
     </div>
   </div>
 </template>
@@ -89,9 +88,9 @@ function useAutoRunCode() {
 }
 
 .p-operation {
-  border-bottom: 1px solid #e0e0e0;
+  border-top: 1px solid #e0e0e0;
   padding: 10px 0;
-  margin-bottom: 10px;
+  margin-top: 10px;
 }
 
 .p-operation button {
@@ -104,13 +103,10 @@ function useAutoRunCode() {
   background-color: #fff;
   color: #4e4e4e;
   cursor: pointer;
+  margin-left: 10px;
 }
 
 .p-operation button:hover {
   background-color: #cdcdcd;
-}
-
-.p-operation button:not(:last-child) {
-  margin-right: 10px;
 }
 </style>
