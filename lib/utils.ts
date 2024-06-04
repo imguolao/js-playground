@@ -3,16 +3,14 @@ export type LogMessage = {
   message: string
 }
 
-export function execCode(code: string): LogMessage[] {
-  const logResults: LogMessage[] = []
-  const originalConsole = window.console
+export function execCode(code: string, callback: (message: LogMessage) => void): void {
   try {
-    window.console = new Proxy(console, {
+    const proxyConsole = new Proxy(console, {
       get(target, prop) {
         if (prop === 'log' || prop === 'error' || prop === 'warn') {
           return (...args: any[]) => {
             const message = args.join(' ')
-            logResults.push({
+            callback({
               type: prop === 'error' ? 'error' : 'info',
               message,
             })
@@ -23,17 +21,23 @@ export function execCode(code: string): LogMessage[] {
       },
     })
 
-    new Function(code)()
+    const proxyWindow = new Proxy(window, {
+      get(target, prop) {
+        if (prop === 'console') {
+          return proxyConsole
+        }
+
+        return target[prop as keyof Window]
+      }
+    })
+
+    new Function('proxyWindow', `with(proxyWindow) {${code}}`)(proxyWindow)
   } catch (err) {
-    logResults.push({
+    callback({
       type: 'error',
       message: `${err}`
     })
-  } finally {
-    window.console = originalConsole
   }
-
-  return logResults
 }
 
 export function debounce<T extends (...args: any[]) => any>(

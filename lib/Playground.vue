@@ -20,8 +20,11 @@ const props = defineProps<{
 
 const code = ref<string>(props?.defaultCode ?? '')
 const logs = ref<LogMessage[]>([])
-const updateLogs = (code: string) => (logs.value = execCode(code))
 const clearLogs = () => (logs.value = [])
+const updateLogs = (code: string) => {
+  clearLogs()
+  execCode(code, log => logs.value.push(log))
+}
 
 useAutoRunCode()
 onMounted(() => {
@@ -33,7 +36,6 @@ onMounted(() => {
 function useAutoRunCode() {
   const time = isUndefined(props.debounceTime) ? 300 : Math.max(0, props.debounceTime)
   const debounceRunCode = debounce(() => {
-    console.log(code.value)
     updateLogs(code.value)
   }, time)
 

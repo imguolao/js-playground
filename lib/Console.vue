@@ -20,7 +20,6 @@ const props = defineProps<{
         &gt;&nbsp;
         <span
           :class="{
-            ['vc-item']: true,
             ['vc-item-error']: log.type === 'error',
           }">
           {{ log.message }}

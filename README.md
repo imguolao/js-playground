@@ -20,7 +20,7 @@ npm i @guolao/js-playground
 
 <script setup>
 import { JSPlayground } from '@guolao/js-playground'
-import '@guolao/js-playground/style.css'
+import '@guolao/js-playground/dist/style.css'
 
 const code = 'console.log(123)'
 </script>
